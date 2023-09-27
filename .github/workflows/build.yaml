@@ -1,0 +1,47 @@
+
+name: "backend cicd"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - dev
+      - staging
+  
+  pull_request:
+    branches:
+      - dev
+      - main
+      - staging
+
+
+jobs:
+  test:
+    name: "runs unit test"
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: install dependencies
+        run: echo "run npm install command"
+
+      - name: unit test
+        run: echo "run npm run test command"  
+
+  lint:
+    name: "lints the code"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: install dependencies
+        run: echo "run npm install command"
+
+      - name: lint the code
+        run: echo "run npm run lint command" 
+
