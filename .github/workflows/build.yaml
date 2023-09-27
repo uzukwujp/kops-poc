@@ -1,5 +1,5 @@
 
-name: "backend cicd"
+name: "backend continous integration workflow"
 
 on:
   workflow_dispatch:
