@@ -2,10 +2,10 @@
 name: "deploy backend application"
 
 on:
-  workflow_run:
-    workflows: ["backend continous integration workflow"]
-    types:
-      - completed
+  push:
+    - main
+    - dev
+    - staging
 
 jobs:
 
@@ -25,4 +25,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: deploy the image
-        run: echo "deploys to AZ container instance"
+        shell: bash
+        run: |
+          if [[ $GITHUB_REF == "main" ]] 
+          then
+            echo "run command to deploy to production"
+          elif [[ $GITHUB_REF == "dev" ]]
+          then
+            echo "run command to deploy to dev"
+          elif [[ $GITHUB_REF == "staging" ]]
+          then
+            echo "run command to deploy to staging"
+          fi
