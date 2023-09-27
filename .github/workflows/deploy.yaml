@@ -1,0 +1,28 @@
+
+name: "deploy backend application"
+
+on:
+  workflow_run:
+    workflows: ["backend continous integration workflow"]
+    types:
+      - completed
+
+jobs:
+
+  build-push:
+    name: build and push docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: build docker image
+        run: echo "run docker build command"
+
+      - name: push docker image
+        run: echo "run docker push command"
+
+
+  deploy:
+    name: deploy to Azure container instance
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy to Az container instance
+        run: echo "deploys to AZ container instance"
