@@ -1,0 +1,37 @@
+
+# https://kops.sigs.k8s.io/continuous_integration/
+
+# .gitlab-ci.yml
+stages:
+  - dryrun
+  - update
+  - roll
+
+variables:
+  KOPS_CLUSTER_NAME: ...
+  KOPS_STATE_STORE: ...
+
+dryrun:
+  stage: dryrun
+  only:
+    - master@namespace/project_name
+  script:
+    - kops replace --force -f cluster.yml
+    - kops update cluster
+
+update:
+  stage: update
+  only:
+    - master@namespace/project_name
+  when: manual
+  script:
+    - kops update cluster --yes
+    - kops rolling-update cluster
+
+roll:
+  stage: roll
+  only:
+    - master@namespace/project_name
+  when: manual
+  script:
+    - kops rolling-update cluster --yes
